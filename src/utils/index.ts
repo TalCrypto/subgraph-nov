@@ -39,5 +39,5 @@ export function getELPoint(): ELPoint {
     return elPoint;
 }
 
-export const LAUNCH_TIMESTAMP = BigInt.fromU32(1713557988);
+export const LAUNCH_TIMESTAMP = BigInt.fromU32(1712835084);
 export const POINT_MULTIPLIER = BigInt.fromU32(10000);
