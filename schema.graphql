@@ -16,3 +16,8 @@ type Referral @entity {
   referees: [UserPoint!] @derivedFrom(field: "referer")
 }
 
+type ELPoint @entity {
+  id: Bytes!
+  point: BigInt!
+  lastUpdatedTimestamp: BigInt!
+}

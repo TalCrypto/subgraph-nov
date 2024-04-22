@@ -26,6 +26,15 @@ export function getReferral(referer: Address): Referral {
         referral = new Referral(referer);
     }
     return referral;
+export function getELPoint(): ELPoint {
+    let id = Bytes.empty()
+    let elPoint = ELPoint.load(id);
+    if(elPoint == null) {
+        elPoint = new ELPoint(id);
+        elPoint.point = new BigInt(0);
+        elPoint.lastUpdatedTimestamp = new BigInt(0);
+    }
+    return elPoint;
 }
 
 export const LAUNCH_TIMESTAMP = new BigInt(1713557988);

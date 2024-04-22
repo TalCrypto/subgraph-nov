@@ -48,3 +48,24 @@ dataSources:
         - event: AssetDeposit(indexed address,indexed address,uint256,uint256,string)
           handler: handleAssetDeposit
       file: ./src/deposit-pool.ts
+  - kind: ethereum
+    name: ETHNodeDelegator
+    network: holesky
+    source:
+      address: "0xafC71751B714d999b7037edc9F0012D1A741d3D6"
+      abi: NodeDelegator
+      startBlock: 1325056
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Referral
+        - UserPoint
+      abis:
+        - name: NodeDelegator
+          file: ./abis/NodeDelegator.json
+      eventHandlers:
+        - event: ETHStaked(bytes,uint256)
+          handler: handleETHStatked
+      file: ./src/node-delegator.ts
