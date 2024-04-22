@@ -16,17 +16,12 @@ dataSources:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - AdminChanged
-        - BeaconUpgraded
-        - Upgraded
+        - UserBalance
+        - UserPoint
       abis:
         - name: NovETH
           file: ./abis/NovETH.json
       eventHandlers:
-        - event: AdminChanged(address,address)
-          handler: handleAdminChanged
-        - event: BeaconUpgraded(indexed address)
-          handler: handleBeaconUpgraded
-        - event: Upgraded(indexed address)
-          handler: handleUpgraded
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTrasfer
       file: ./src/nov-eth.ts

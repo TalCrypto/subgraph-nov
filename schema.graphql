@@ -1,24 +1,18 @@
-type AdminChanged @entity(immutable: true) {
-  id: Bytes!
-  previousAdmin: Bytes! # address
-  newAdmin: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+
+type UserBalance @entity {
+  id: Bytes! # address
+  balance: BigInt!
 }
 
-type BeaconUpgraded @entity(immutable: true) {
-  id: Bytes!
-  beacon: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type UserPoint @entity {
+  id: Bytes! # address
+  point: BigInt!
+  lastUpdatedTimestamp: BigInt!
+  referer: Referral
 }
 
-type Upgraded @entity(immutable: true) {
-  id: Bytes!
-  implementation: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type Referral @entity {
+  id: Bytes! # address
+  referees: [UserPoint!] @derivedFrom(field: "referer")
 }
+
