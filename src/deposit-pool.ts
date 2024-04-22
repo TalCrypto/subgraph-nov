@@ -13,6 +13,9 @@ export function handleAssetDeposit(event: AssetDepositEvent): void {
 }
 
 function _saveRefferal(depositor: Address, referralId: string): void {
+    
+    if(!referralId) return;
+
     let depositorUserPoint = getUserPoint(depositor);
 
     saveReferral(referralId);
