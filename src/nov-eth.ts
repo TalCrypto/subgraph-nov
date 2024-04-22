@@ -3,6 +3,7 @@ import { Transfer as TransferEvent } from "../generated/NovETH/NovETH";
 import {
   LAUNCH_TIMESTAMP,
   POINT_MULTIPLIER,
+  getTotalPoint,
   getUserPoint,
 } from "./utils";
 
@@ -41,6 +42,13 @@ export function handleTrasfer(event: TransferEvent): void {
       toUserPoint.point = toUserPoint.point
         .plus(earlyBonusPoint)
         .plus(whaleBonusPoint);
+
+      let totalPoint = getTotalPoint();
+      let accPoint = getPoint(totalPoint.totalSupply, totalPoint.lastUpdatedTimestamp, timestamp);
+      totalPoint.totalPoint = totalPoint.totalPoint.plus(accPoint).plus(earlyBonusPoint).plus(whaleBonusPoint);
+      totalPoint.totalSupply = totalPoint.totalSupply.plus(value);
+      totalPoint.lastUpdatedTimestamp = timestamp;
+      totalPoint.save();
     }
 
     let point = getPoint(
