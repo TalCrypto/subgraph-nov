@@ -23,6 +23,7 @@ type TotalPoint @entity {
 type TotalELPoint @entity {
   id: Bytes!
   totalLstBalance: BigInt!
+  totalElBalance: BigInt!
   totalElPoint: BigInt!
   lastUpdatedTimestamp: BigInt!
 }

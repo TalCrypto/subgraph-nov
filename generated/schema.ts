@@ -311,6 +311,19 @@ export class TotalELPoint extends Entity {
     this.set("totalLstBalance", Value.fromBigInt(value));
   }
 
+  get totalElBalance(): BigInt {
+    let value = this.get("totalElBalance");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set totalElBalance(value: BigInt) {
+    this.set("totalElBalance", Value.fromBigInt(value));
+  }
+
   get totalElPoint(): BigInt {
     let value = this.get("totalElPoint");
     if (!value || value.kind == ValueKind.NULL) {

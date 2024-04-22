@@ -27,6 +27,7 @@ export function getTotalELPoint(): TotalELPoint {
     if(elPoint == null) {
         elPoint = new TotalELPoint(id);
         elPoint.totalLstBalance = BigInt.fromU32(0);
+        elPoint.totalElBalance = BigInt.fromU32(0);
         elPoint.totalElPoint = BigInt.fromU32(0);
         elPoint.lastUpdatedTimestamp = BigInt.fromU32(0);
     }
