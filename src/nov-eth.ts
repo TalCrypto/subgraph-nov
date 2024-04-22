@@ -89,7 +89,7 @@ function getEarlyBonusPoint(
   if (startMultiplier.isZero()) startMultiplier = new BigInt(500);
   if (startMultiplier.lt(new BigInt(0))) startMultiplier = new BigInt(0);
 
-  let bonusMultiplier;
+  let bonusMultiplier = new BigInt(0);
   let duringInMultiplier = duringInDays.times(new BigInt(1000));
 
   if (startMultiplier.ge(duringInMultiplier)) {
@@ -113,7 +113,7 @@ function getEarlyBonusPoint(
 
 function getWhaleBonusMultiplier(userBalance: UserBalance): BigInt {
   let multiplier = new BigInt(1000);
-  let balanceInEth = userBalance.balance.div(new BigInt(1e18));
+  let balanceInEth = userBalance.balance.div(new BigInt(10**18));
   if (balanceInEth.ge(new BigInt(10))) {
     multiplier = new BigInt(1050);
   } else if (balanceInEth.ge(new BigInt(100))) {

@@ -8,13 +8,14 @@ type UserPoint @entity {
   id: Bytes! # address
   point: BigInt!
   lastUpdatedTimestamp: BigInt!
-  referer: Referral
+  referral: Referral
 }
 
 type Referral @entity {
-  id: Bytes! # address
-  referees: [UserPoint!] @derivedFrom(field: "referer")
+  id: String! # referral id
+  referees: [UserPoint!]! @derivedFrom(field: "referral")
 }
+
 
 type ELPoint @entity {
   id: Bytes!

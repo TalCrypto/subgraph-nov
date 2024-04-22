@@ -137,28 +137,28 @@ export class UserPoint extends Entity {
     this.set("lastUpdatedTimestamp", Value.fromBigInt(value));
   }
 
-  get referer(): Bytes | null {
-    let value = this.get("referer");
+  get referral(): string | null {
+    let value = this.get("referral");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
-      return value.toBytes();
+      return value.toString();
     }
   }
 
-  set referer(value: Bytes | null) {
+  set referral(value: string | null) {
     if (!value) {
-      this.unset("referer");
+      this.unset("referral");
     } else {
-      this.set("referer", Value.fromBytes(<Bytes>value));
+      this.set("referral", Value.fromString(<string>value));
     }
   }
 }
 
 export class Referral extends Entity {
-  constructor(id: Bytes) {
+  constructor(id: string) {
     super();
-    this.set("id", Value.fromBytes(id));
+    this.set("id", Value.fromString(id));
   }
 
   save(): void {
@@ -166,21 +166,69 @@ export class Referral extends Entity {
     assert(id != null, "Cannot save Referral entity without an ID");
     if (id) {
       assert(
-        id.kind == ValueKind.BYTES,
-        `Entities of type Referral must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`,
+        id.kind == ValueKind.STRING,
+        `Entities of type Referral must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`,
       );
-      store.set("Referral", id.toBytes().toHexString(), this);
+      store.set("Referral", id.toString(), this);
     }
   }
 
-  static loadInBlock(id: Bytes): Referral | null {
-    return changetype<Referral | null>(
-      store.get_in_block("Referral", id.toHexString()),
+  static loadInBlock(id: string): Referral | null {
+    return changetype<Referral | null>(store.get_in_block("Referral", id));
+  }
+
+  static load(id: string): Referral | null {
+    return changetype<Referral | null>(store.get("Referral", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get referees(): UserPointLoader {
+    return new UserPointLoader(
+      "Referral",
+      this.get("id")!.toString(),
+      "referees",
+    );
+  }
+}
+
+export class ELPoint extends Entity {
+  constructor(id: Bytes) {
+    super();
+    this.set("id", Value.fromBytes(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save ELPoint entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.BYTES,
+        `Entities of type ELPoint must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`,
+      );
+      store.set("ELPoint", id.toBytes().toHexString(), this);
+    }
+  }
+
+  static loadInBlock(id: Bytes): ELPoint | null {
+    return changetype<ELPoint | null>(
+      store.get_in_block("ELPoint", id.toHexString()),
     );
   }
 
-  static load(id: Bytes): Referral | null {
-    return changetype<Referral | null>(store.get("Referral", id.toHexString()));
+  static load(id: Bytes): ELPoint | null {
+    return changetype<ELPoint | null>(store.get("ELPoint", id.toHexString()));
   }
 
   get id(): Bytes {
@@ -196,12 +244,30 @@ export class Referral extends Entity {
     this.set("id", Value.fromBytes(value));
   }
 
-  get referees(): UserPointLoader {
-    return new UserPointLoader(
-      "Referral",
-      this.get("id")!.toBytes().toHexString(),
-      "referees",
-    );
+  get point(): BigInt {
+    let value = this.get("point");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set point(value: BigInt) {
+    this.set("point", Value.fromBigInt(value));
+  }
+
+  get lastUpdatedTimestamp(): BigInt {
+    let value = this.get("lastUpdatedTimestamp");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set lastUpdatedTimestamp(value: BigInt) {
+    this.set("lastUpdatedTimestamp", Value.fromBigInt(value));
   }
 }
 

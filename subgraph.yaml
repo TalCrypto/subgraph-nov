@@ -26,7 +26,7 @@ dataSources:
           handler: handleTrasfer
       file: ./src/nov-eth.ts
   - kind: ethereum
-    name: LRTDepositPool
+    name: DepositPool
     network: holesky
     source:
       address: "0xb418BDB514A7E0563469c16aAa8288C5A2bB8123"

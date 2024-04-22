@@ -1,10 +1,9 @@
-import { Address } from "@graphprotocol/graph-ts";
+import { Address, ByteArray } from "@graphprotocol/graph-ts";
 import {
   ETHDeposit as ETHDepositEvent,
   AssetDeposit as AssetDepositEvent,
-} from "../generated/LRTDepositPool/DepositPool";
-import { base62ToHex } from "./utils/base62";
-import { getReferral, getUserPoint } from "./utils";
+} from "../generated/DepositPool/DepositPool";
+import { saveReferral, getUserPoint } from "./utils";
 
 export function handleETHDeposit(event: ETHDepositEvent): void {
     _saveRefferal(event.params.depositor, event.params.referralId)
@@ -15,14 +14,13 @@ export function handleAssetDeposit(event: AssetDepositEvent): void {
 
 function _saveRefferal(depositor: Address, referralId: string): void {
     let depositorUserPoint = getUserPoint(depositor);
-    let refererAddress = base62ToHex(referralId);
-    let referral = getReferral(refererAddress);
+
+    saveReferral(referralId);
 
     // set referer for the first time
-    if(depositorUserPoint.referer == null) {
-        depositorUserPoint.referer = refererAddress;
+    if(!depositorUserPoint.referral) {
+        depositorUserPoint.referral = referralId;
     }
 
-    referral.save();
     depositorUserPoint.save();
 }
