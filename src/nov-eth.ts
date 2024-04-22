@@ -45,7 +45,7 @@ function getPoint(
   userPoint: UserPoint,
   timestamp: BigInt
 ): BigInt {
-  if (userPoint.lastUpdatedTimestamp.isZero()) {
+  if (userPoint.lastUpdatedTimestamp.lt(LAUNCH_TIMESTAMP)) {
     return new BigInt(0);
   } else {
     let whaleMultiplier = getWhaleBonusMultiplier(userBalance);
