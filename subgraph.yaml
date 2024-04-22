@@ -10,7 +10,7 @@ dataSources:
     source:
       address: "0xc5d3754a2C4d6bEc0065B4358F30016cEe1df719"
       abi: NovETH
-      startBlock: 0
+      startBlock: 1325056
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -25,3 +25,26 @@ dataSources:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTrasfer
       file: ./src/nov-eth.ts
+  - kind: ethereum
+    name: LRTDepositPool
+    network: holesky
+    source:
+      address: "0xb418BDB514A7E0563469c16aAa8288C5A2bB8123"
+      abi: DepositPool
+      startBlock: 1325056
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Referral
+        - UserPoint
+      abis:
+        - name: DepositPool
+          file: ./abis/DepositPool.json
+      eventHandlers:
+        - event: ETHDeposit(indexed address,uint256,uint256,string)
+          handler: handleETHDeposit
+        - event: AssetDeposit(indexed address,indexed address,uint256,uint256,string)
+          handler: handleAssetDeposit
+      file: ./src/deposit-pool.ts

@@ -1,5 +1,5 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts";
-import { UserBalance, UserPoint } from "../../generated/schema";
+import { Referral, UserBalance, UserPoint } from "../../generated/schema";
 
 export function getUserBalance(user: Address): UserBalance {
   let userBalance = UserBalance.load(user);
@@ -18,6 +18,14 @@ export function getUserPoint(user: Address): UserPoint {
     userPoint.lastUpdatedTimestamp = new BigInt(0);
   }
   return userPoint;
+}
+
+export function getReferral(referer: Address): Referral {
+    let referral = Referral.load(referer);
+    if(referral == null) {
+        referral = new Referral(referer);
+    }
+    return referral;
 }
 
 export const LAUNCH_TIMESTAMP = new BigInt(1713557988);
