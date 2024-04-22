@@ -1,11 +1,8 @@
 
-type UserBalance @entity {
-  id: Bytes! # address
-  balance: BigInt!
-}
-
 type UserPoint @entity {
   id: Bytes! # address
+  balance: BigInt!
+  lstBalance: BigInt!
   point: BigInt!
   lastUpdatedTimestamp: BigInt!
   referral: Referral
@@ -16,9 +13,16 @@ type Referral @entity {
   referees: [UserPoint!]! @derivedFrom(field: "referral")
 }
 
-
-type ELPoint @entity {
+type TotalPoint @entity {
   id: Bytes!
-  point: BigInt!
+  totalSupply: BigInt!
+  totalPoint: BigInt!
+  lastUpdatedTimestamp: BigInt!
+}
+
+type TotalELPoint @entity {
+  id: Bytes!
+  totalLstBalance: BigInt!
+  totalElPoint: BigInt!
   lastUpdatedTimestamp: BigInt!
 }

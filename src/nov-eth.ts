@@ -1,10 +1,8 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts";
 import { Transfer as TransferEvent } from "../generated/NovETH/NovETH";
-import { UserBalance, UserPoint } from "../generated/schema";
 import {
   LAUNCH_TIMESTAMP,
   POINT_MULTIPLIER,
-  getUserBalance,
   getUserPoint,
 } from "./utils";
 
@@ -15,28 +13,25 @@ export function handleTrasfer(event: TransferEvent): void {
   let timestamp = event.block.timestamp;
 
   if (!fromAddress.equals(Address.zero())) {
-    let fromUserBalance = getUserBalance(fromAddress);
     let fromUserPoint = getUserPoint(fromAddress);
 
     let point = getPoint(
-      fromUserBalance.balance,
+      fromUserPoint.balance,
       fromUserPoint.lastUpdatedTimestamp,
       timestamp
     );
     fromUserPoint.point = fromUserPoint.point.plus(point);
     fromUserPoint.lastUpdatedTimestamp = timestamp;
 
-    if (fromUserBalance.balance.ge(value)) {
-      fromUserBalance.balance = fromUserBalance.balance.minus(value);
+    if (fromUserPoint.balance.ge(value)) {
+      fromUserPoint.balance = fromUserPoint.balance.minus(value);
     } else {
-      fromUserBalance.balance = BigInt.fromU32(0);
+      fromUserPoint.balance = BigInt.fromU32(0);
     }
     fromUserPoint.save();
-    fromUserBalance.save();
   }
 
   if (!toAddress.equals(Address.zero())) {
-    let toUserBalance = getUserBalance(toAddress);
     let toUserPoint = getUserPoint(toAddress);
 
     // when depositing
@@ -49,7 +44,7 @@ export function handleTrasfer(event: TransferEvent): void {
     }
 
     let point = getPoint(
-      toUserBalance.balance,
+      toUserPoint.balance,
       toUserPoint.lastUpdatedTimestamp,
       timestamp
     );
@@ -57,9 +52,8 @@ export function handleTrasfer(event: TransferEvent): void {
     toUserPoint.point = toUserPoint.point.plus(point);
     toUserPoint.lastUpdatedTimestamp = timestamp;
 
-    toUserBalance.balance = toUserBalance.balance.plus(value);
+    toUserPoint.balance = toUserPoint.balance.plus(value);
     toUserPoint.save();
-    toUserBalance.save();
   }
 }
 
