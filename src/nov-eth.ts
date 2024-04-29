@@ -44,8 +44,15 @@ export function handleTrasfer(event: TransferEvent): void {
         .plus(whaleBonusPoint);
 
       let totalPoint = getTotalPoint();
-      let accPoint = getPoint(totalPoint.totalSupply, totalPoint.lastUpdatedTimestamp, timestamp);
-      totalPoint.totalPoint = totalPoint.totalPoint.plus(accPoint).plus(earlyBonusPoint).plus(whaleBonusPoint);
+      let accPoint = getPoint(
+        totalPoint.totalSupply,
+        totalPoint.lastUpdatedTimestamp,
+        timestamp
+      );
+      totalPoint.totalPoint = totalPoint.totalPoint
+        .plus(accPoint)
+        .plus(earlyBonusPoint)
+        .plus(whaleBonusPoint);
       totalPoint.totalSupply = totalPoint.totalSupply.plus(value);
       totalPoint.lastUpdatedTimestamp = timestamp;
       totalPoint.save();

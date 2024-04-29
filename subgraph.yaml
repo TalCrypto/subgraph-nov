@@ -39,7 +39,8 @@ dataSources:
       entities:
         - Referral
         - UserPoint
-        - TotalELPoint
+        - UserELPointPortion
+        - TotalELPointPortion
       abis:
         - name: DepositPool
           file: ./abis/DepositPool.json
@@ -68,4 +69,6 @@ dataSources:
       eventHandlers:
         - event: ETHStaked(bytes,uint256)
           handler: handleETHStatked
+        - event: AssetDepositIntoStrategy(indexed address,indexed address,uint256)
+          handler: handleAssetStatked
       file: ./src/node-delegator.ts

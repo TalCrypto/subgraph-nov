@@ -67,19 +67,6 @@ export class UserPoint extends Entity {
     this.set("balance", Value.fromBigInt(value));
   }
 
-  get lstBalance(): BigInt {
-    let value = this.get("lstBalance");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set lstBalance(value: BigInt) {
-    this.set("lstBalance", Value.fromBigInt(value));
-  }
-
   get point(): BigInt {
     let value = this.get("point");
     if (!value || value.kind == ValueKind.NULL) {
@@ -255,6 +242,172 @@ export class TotalPoint extends Entity {
   }
 }
 
+export class UserELPointPortion extends Entity {
+  constructor(id: Bytes) {
+    super();
+    this.set("id", Value.fromBytes(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save UserELPointPortion entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.BYTES,
+        `Entities of type UserELPointPortion must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`,
+      );
+      store.set("UserELPointPortion", id.toBytes().toHexString(), this);
+    }
+  }
+
+  static loadInBlock(id: Bytes): UserELPointPortion | null {
+    return changetype<UserELPointPortion | null>(
+      store.get_in_block("UserELPointPortion", id.toHexString()),
+    );
+  }
+
+  static load(id: Bytes): UserELPointPortion | null {
+    return changetype<UserELPointPortion | null>(
+      store.get("UserELPointPortion", id.toHexString()),
+    );
+  }
+
+  get id(): Bytes {
+    let value = this.get("id");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set id(value: Bytes) {
+    this.set("id", Value.fromBytes(value));
+  }
+
+  get lstBalance(): BigInt {
+    let value = this.get("lstBalance");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set lstBalance(value: BigInt) {
+    this.set("lstBalance", Value.fromBigInt(value));
+  }
+
+  get elPointPortion(): BigInt {
+    let value = this.get("elPointPortion");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set elPointPortion(value: BigInt) {
+    this.set("elPointPortion", Value.fromBigInt(value));
+  }
+
+  get lastUpdatedTimestamp(): BigInt {
+    let value = this.get("lastUpdatedTimestamp");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set lastUpdatedTimestamp(value: BigInt) {
+    this.set("lastUpdatedTimestamp", Value.fromBigInt(value));
+  }
+}
+
+export class TotalELPointPortion extends Entity {
+  constructor(id: Bytes) {
+    super();
+    this.set("id", Value.fromBytes(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save TotalELPointPortion entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.BYTES,
+        `Entities of type TotalELPointPortion must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`,
+      );
+      store.set("TotalELPointPortion", id.toBytes().toHexString(), this);
+    }
+  }
+
+  static loadInBlock(id: Bytes): TotalELPointPortion | null {
+    return changetype<TotalELPointPortion | null>(
+      store.get_in_block("TotalELPointPortion", id.toHexString()),
+    );
+  }
+
+  static load(id: Bytes): TotalELPointPortion | null {
+    return changetype<TotalELPointPortion | null>(
+      store.get("TotalELPointPortion", id.toHexString()),
+    );
+  }
+
+  get id(): Bytes {
+    let value = this.get("id");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set id(value: Bytes) {
+    this.set("id", Value.fromBytes(value));
+  }
+
+  get totalLstBalance(): BigInt {
+    let value = this.get("totalLstBalance");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set totalLstBalance(value: BigInt) {
+    this.set("totalLstBalance", Value.fromBigInt(value));
+  }
+
+  get totalElPointPortion(): BigInt {
+    let value = this.get("totalElPointPortion");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set totalElPointPortion(value: BigInt) {
+    this.set("totalElPointPortion", Value.fromBigInt(value));
+  }
+
+  get lastUpdatedTimestamp(): BigInt {
+    let value = this.get("lastUpdatedTimestamp");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set lastUpdatedTimestamp(value: BigInt) {
+    this.set("lastUpdatedTimestamp", Value.fromBigInt(value));
+  }
+}
+
 export class TotalELPoint extends Entity {
   constructor(id: Bytes) {
     super();
@@ -296,19 +449,6 @@ export class TotalELPoint extends Entity {
 
   set id(value: Bytes) {
     this.set("id", Value.fromBytes(value));
-  }
-
-  get totalLstBalance(): BigInt {
-    let value = this.get("totalLstBalance");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set totalLstBalance(value: BigInt) {
-    this.set("totalLstBalance", Value.fromBigInt(value));
   }
 
   get totalElBalance(): BigInt {

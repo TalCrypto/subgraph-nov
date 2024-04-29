@@ -2,7 +2,6 @@
 type UserPoint @entity {
   id: Bytes! # address
   balance: BigInt!
-  lstBalance: BigInt!
   point: BigInt!
   lastUpdatedTimestamp: BigInt!
   referral: Referral
@@ -20,9 +19,22 @@ type TotalPoint @entity {
   lastUpdatedTimestamp: BigInt!
 }
 
-type TotalELPoint @entity {
+type UserELPointPortion @entity {
+  id: Bytes! # address
+  lstBalance: BigInt!
+  elPointPortion: BigInt!
+  lastUpdatedTimestamp: BigInt!
+}
+
+type TotalELPointPortion @entity {
   id: Bytes!
   totalLstBalance: BigInt!
+  totalElPointPortion: BigInt!
+  lastUpdatedTimestamp: BigInt!
+}
+
+type TotalELPoint @entity {
+  id: Bytes!
   totalElBalance: BigInt!
   totalElPoint: BigInt!
   lastUpdatedTimestamp: BigInt!
